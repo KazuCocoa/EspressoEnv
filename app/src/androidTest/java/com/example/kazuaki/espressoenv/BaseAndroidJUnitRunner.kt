@@ -15,6 +15,17 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     val WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
     val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
 
+
+    private fun grantPermissionWithAdb(permission: String) {
+        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand(
+                "pm grant ${InstrumentationRegistry.getTargetContext().packageName} $permission"
+        )
+    }
+
+    private fun grantPermissionsWithAdb(permissions: List<String>) {
+        permissions.forEach { grantPermissionWithAdb(it) }
+    }
+
     private fun permissionGranted(permission: String): Boolean {
         val checkPermission = ContextCompat.checkSelfPermission(targetContext, permission)
         return checkPermission == PERMISSION_GRANTED
@@ -31,8 +42,9 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     }
 
     private fun enableScreenshots() {
-        grantPermission(WRITE_EXTERNAL_STORAGE)
-        grantPermission(READ_EXTERNAL_STORAGE)
+        grantPermissionsWithAdb(listOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE))
+        // grantPermission(WRITE_EXTERNAL_STORAGE)
+        // grantPermission(READ_EXTERNAL_STORAGE)
     }
 
     override fun onStart() {

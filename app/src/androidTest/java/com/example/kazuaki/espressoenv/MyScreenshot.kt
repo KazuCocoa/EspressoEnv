@@ -37,6 +37,7 @@ class MyScreenshot {
         var buffer: BufferedOutputStream? = null;
 
         screenshotPath.mkdirs()
+        Chmod().plusRWX(screenshotPath)
 
         try {
             val screenshotName: String = className + underscore + methodName + underscore + description + png
@@ -57,6 +58,4 @@ class MyScreenshot {
             screenshot.recycle()
         }
     }
-
-
 }
