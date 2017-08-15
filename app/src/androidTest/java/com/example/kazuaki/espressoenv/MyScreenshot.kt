@@ -34,23 +34,23 @@ class MyScreenshot {
         val instrumentation: Instrumentation = InstrumentationRegistry.getInstrumentation()
         val screenshot: Bitmap = instrumentation.uiAutomation.takeScreenshot()
 
-        var buffer: BufferedOutputStream? = null;
+        val buffer: BufferedOutputStream? = null
 
         screenshotPath.mkdirs()
         Chmod().plusRWX(screenshotPath)
 
         try {
-            val screenshotName: String = className + underscore + methodName + underscore + description + png
-            buffer = BufferedOutputStream(FileOutputStream(File(screenshotPath, screenshotName)))
-
-            val quality = 90
-            screenshot.compress(Bitmap.CompressFormat.PNG, quality, buffer)
-            buffer.flush()
+            "$className$underscore$methodName$underscore$description$png".let {
+                BufferedOutputStream(FileOutputStream(File(screenshotPath, it))).let {
+                    screenshot.compress(Bitmap.CompressFormat.PNG, 90, it)
+                    it.flush()
+                }
+            }
         } catch (ignored: IOException) {
 
         } finally {
             try {
-                if (buffer != null) buffer.close()
+                buffer?.close()
             } catch (ignored: IOException) {
 
             }

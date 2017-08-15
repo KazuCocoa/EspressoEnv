@@ -7,12 +7,14 @@ import java.io.File
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.GINGERBREAD)
 class Chmod {
     fun plusR(file: File) {
-        file.setReadable(true)
+        file.apply { setReadable(true) }
     }
 
     fun plusRWX(file: File) {
-        file.setReadable(true)
-        file.setExecutable(true)
-        file.setWritable(true)
+        file.apply {
+            setReadable(true)
+            setExecutable(true)
+            setWritable(true)
+        }
     }
 }
