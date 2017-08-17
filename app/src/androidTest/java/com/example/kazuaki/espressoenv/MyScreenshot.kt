@@ -10,6 +10,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
+// Some methos related screenshots and test weatchers, inspired by https://github.com/square/spoon
+
 class MyScreenshot {
     private val png: String = ".png"
     private val underscore: String = "_"
