@@ -5,9 +5,9 @@ import android.support.test.runner.AndroidJUnit4
 
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 import org.junit.Rule
+import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth.assertWithMessage
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -26,6 +26,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getTargetContext()
 
         MyScreenshot().takeScreenshot(classNam, "useAppContext", "neko")
-        assertEquals("com.example.kazuaki.espressoenv", appContext.packageName)
+        assertThat(appContext.packageName).isEqualTo("com.example.kazuaki.espressoenv")
+        assertWithMessage("message").that(appContext.packageName).isEqualTo("com.example.kazuaki.espressoenv")
     }
 }
