@@ -7,7 +7,22 @@ import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
+
 class MainActivity : AppCompatActivity() {
+
+    /**
+     * for Espresso
+     */
+    interface CountStateListener {
+        fun onCountStateChanged()
+        fun backToZero()
+    }
+
+    var countState: CountStateListener? = null
+
+    /**
+     *
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
+            countState?.onCountStateChanged()
+            countState?.backToZero()
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
