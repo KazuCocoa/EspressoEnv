@@ -22,7 +22,7 @@ class MyScreenshot {
             val screenshots: Array<out File> = screenshotPath.listFiles() ?: return
             screenshots.forEach { it.delete() }
         } catch (ignored: Exception) {
-
+            // empty
         }
     }
 
