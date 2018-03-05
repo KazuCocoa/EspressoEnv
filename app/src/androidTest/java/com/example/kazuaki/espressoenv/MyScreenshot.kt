@@ -49,12 +49,12 @@ class MyScreenshot {
                 }
             }
         } catch (ignored: IOException) {
-
+            // empty
         } finally {
             try {
                 buffer?.close()
             } catch (ignored: IOException) {
-
+                // empty
             }
 
             screenshot.recycle()
