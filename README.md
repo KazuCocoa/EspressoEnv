@@ -6,3 +6,10 @@ Some of template to help Espresso tests.
 - Collect and manage the results
     - Composer
         - https://github.com/gojuno/composer
+
+# Example
+
+```
+$ ./gradlew test
+$ ./gradlew connectedAndroidTest
+```

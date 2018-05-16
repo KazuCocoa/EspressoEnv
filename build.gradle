@@ -2,15 +2,15 @@
 apply plugin: "io.gitlab.arturbosch.detekt"
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
+    ext.kotlin_version = '1.2.41'
     repositories {
         google()
         jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.0.0'
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.0.32"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC6-3"
 
