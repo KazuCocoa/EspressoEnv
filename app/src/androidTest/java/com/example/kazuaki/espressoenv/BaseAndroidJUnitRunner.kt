@@ -4,10 +4,7 @@ import android.Manifest
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnitRunner
 import com.linkedin.android.testbutler.TestButler
-import android.support.v4.content.ContextCompat
-
-import android.content.pm.PackageManager.PERMISSION_GRANTED
-
+import android.support.test.runner.permission.PermissionRequester
 
 
 class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
@@ -15,44 +12,22 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     val WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
     val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
 
-
-    private fun grantPermissionWithAdb(permission: String) {
-        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand(
-                "pm grant ${InstrumentationRegistry.getTargetContext().packageName} $permission"
-        )
+    private fun grantPermissions(permissions: Array<String>) {
+        val requester = PermissionRequester()
+        requester.addPermissions(*permissions)
+        requester.requestPermissions()
     }
 
-    private fun grantPermissionsWithAdb(permissions: List<String>) {
-        permissions.forEach { grantPermissionWithAdb(it) }
-    }
-
-    private fun permissionGranted(permission: String): Boolean {
-        val checkPermission = ContextCompat.checkSelfPermission(targetContext, permission)
-        return checkPermission == PERMISSION_GRANTED
-    }
-
-    private fun grantPermission(permission: String) {
-        if (permissionGranted(permission)) return
-
-        TestButler.grantPermission(InstrumentationRegistry.getTargetContext(), permission)
-
-        if (!permissionGranted(permission)) {
-            throw RuntimeException("Failed to grant " + permission)
-        }
-    }
-
-    private fun enableScreenshots() {
-        grantPermissionsWithAdb(listOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE))
-        // grantPermission(WRITE_EXTERNAL_STORAGE)
-        // grantPermission(READ_EXTERNAL_STORAGE)
+    private fun enableScreenshotsPermissions() {
+        grantPermissions(arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE))
     }
 
     override fun onStart() {
         TestButler.setup(InstrumentationRegistry.getTargetContext())
 
-        MyScreenshot().deleteAllScreenshots()
+        enableScreenshotsPermissions()
 
-        enableScreenshots()
+        MyScreenshot().deleteAllScreenshots()
 
         super.onStart()
     }

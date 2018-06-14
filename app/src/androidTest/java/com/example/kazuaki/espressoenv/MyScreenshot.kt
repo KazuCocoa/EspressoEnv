@@ -4,26 +4,24 @@ import android.app.Instrumentation
 import android.graphics.Bitmap
 import android.os.Environment
 import android.support.test.InstrumentationRegistry
+import android.util.Log
 import org.junit.runner.Description
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-// Some methos related screenshots and test weatchers, inspired by https://github.com/square/spoon
+// Some methods related screenshots and test weatchers, inspired by https://github.com/square/spoon
 
 class MyScreenshot {
     private val png: String = ".png"
     private val underscore: String = "_"
-    private val screenshotPath: File = File(Environment.getExternalStorageDirectory(), "screenshots")
+    private val screenshotPath: File = File(Environment.getExternalStorageDirectory(), "app_spoon-screenshots")
 
     fun deleteAllScreenshots() {
-        try {
-            val screenshots: Array<out File> = screenshotPath.listFiles() ?: return
-            screenshots.forEach { it.delete() }
-        } catch (ignored: Exception) {
-            // empty
-        }
+        val deleteRecursively = screenshotPath.deleteRecursively()
+        val result = if (deleteRecursively) "success" else "failure"
+        Log.i(MyScreenshot::class.java.name, "clearing screenshots from folder ${screenshotPath.absolutePath} $result")
     }
 
     fun takeScreenshot(description: Description, text: String) {
