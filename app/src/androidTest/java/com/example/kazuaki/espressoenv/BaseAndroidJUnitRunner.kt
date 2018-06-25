@@ -5,6 +5,9 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnitRunner
 import com.linkedin.android.testbutler.TestButler
 import android.support.test.runner.permission.PermissionRequester
+import android.support.test.uiautomator.By
+import android.support.test.uiautomator.UiDevice
+import android.support.test.uiautomator.Until
 
 
 class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
@@ -29,6 +32,21 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
 
         MyScreenshot().deleteAllScreenshots()
 
+        // For emulators
+        closeAppIfGoogleAppShowsARN()
+
         super.onStart()
+    }
+
+    private fun closeAppIfGoogleAppShowsARN() {
+        val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        uiDevice.findObject(By.res("android:id/aerr_close"))?.let {
+            it.click()
+            uiDevice.wait(Until.gone(By.res("android:id/aerr_close")), 500)
+        }
+        uiDevice.findObject(By.res("android:id/aerr_mute"))?.let {
+            it.click()
+            uiDevice.wait(Until.gone(By.res("android:id/aerr_mute")), 500)
+        }
     }
 }
