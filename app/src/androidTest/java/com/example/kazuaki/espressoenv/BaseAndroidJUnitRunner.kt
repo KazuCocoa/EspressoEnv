@@ -38,6 +38,8 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
         super.onStart()
     }
 
+    // https://android.googlesource.com/platform/frameworks/base/+/android-cts-7.0_r22/core/res/res/layout/app_error_dialog.xml
+    // We can see aerr_mute and aerr_close over 7.0. Not sure under 6.0 though.
     private fun closeAppIfGoogleAppShowsARN() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         uiDevice.findObject(By.res("android:id/aerr_close"))?.let {
