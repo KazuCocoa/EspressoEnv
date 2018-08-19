@@ -28,7 +28,7 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     override fun onStart() {
         TestButler.setup(InstrumentationRegistry.getTargetContext())
 
-        enableScreenshotsPermissions()
+//        enableScreenshotsPermissions()
 
         MyScreenshot().deleteAllScreenshots()
 

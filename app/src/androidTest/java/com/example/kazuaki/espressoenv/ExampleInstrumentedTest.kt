@@ -18,7 +18,8 @@ import com.google.common.truth.Truth.assertWithMessage
 class ExampleInstrumentedTest {
     val classNam: String = this.javaClass.name
 
-    @Rule @JvmField val myTestWatcher: MyTestWatcher = MyTestWatcher()
+    @get:Rule
+    val myTestWatcher: MyTestWatcher = MyTestWatcher()
 
     @Test
     fun useAppContext() {

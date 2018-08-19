@@ -12,16 +12,20 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ExampleMainActivityTest {
-    @JvmField @Rule var activityRule = ActivityTestRule(MainActivity::class.java, true, true)
 
-    val espressoTestIdlingResource = CountingIdlingResource("my_activity")
+    private val myTestWatcher: MyTestWatcher = MyTestWatcher()
+    private val activityRule = ActivityTestRule(MainActivity::class.java, true, true)
+
+    @get:Rule val ruleChain = RuleChain.outerRule(myTestWatcher).around(activityRule)
+
+    private val espressoTestIdlingResource = CountingIdlingResource("my_activity")
 
     private class CountStateListenerImpl(val idlingResource: CountingIdlingResource) : MainActivity.CountStateListener {
-
         override fun onCountStateChanged() {
             idlingResource.dumpStateToLogs() // Idle: count: 0 and has never been busy!
             idlingResource.increment()
@@ -36,23 +40,34 @@ class ExampleMainActivityTest {
 
     }
 
-
-    @Before fun before() {
+    @Before
+    fun before() {
         activityRule.activity.countState = CountStateListenerImpl(espressoTestIdlingResource)
         IdlingRegistry.getInstance().register(espressoTestIdlingResource)
     }
 
-    @Test fun test() {
-        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click())
-
-        // Next perform doesn't start during the resource is idle.
-        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click())
-
-        Espresso.onView(ViewMatchers.withId(R.id.fab)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+    @Test
+    fun test() {
+        MainPageObject
+            .tapFabButton()
+            .tapFabButton() // Next perform doesn't start during the resource is idle.
+            .assertFabButton()
     }
 
-    @After fun tearDown() {
+    @After
+    fun tearDown() {
         IdlingRegistry.getInstance().unregister(espressoTestIdlingResource)
     }
 
+}
+
+// PageObject using `apply` to enable method chain
+object MainPageObject {
+    fun tapFabButton() = apply {
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click())
+    }
+
+    fun assertFabButton() = apply {
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+    }
 }
