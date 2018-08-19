@@ -15,6 +15,10 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     val WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
     val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
 
+    // We can use GrantPermissionRule for each test case. But this time, we'd like to allow external storage
+    // permission before starting test since we'd like to save screenshot there.
+    //
+    // We can't grant permission against external storage on android API 28 emulator so far since https://issuetracker.google.com/issues/80393450
     private fun grantPermissions(permissions: Array<String>) {
         val requester = PermissionRequester()
         requester.addPermissions(*permissions)
@@ -28,7 +32,7 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     override fun onStart() {
         TestButler.setup(InstrumentationRegistry.getTargetContext())
 
-//        enableScreenshotsPermissions()
+        enableScreenshotsPermissions()
 
         MyScreenshot().deleteAllScreenshots()
 
