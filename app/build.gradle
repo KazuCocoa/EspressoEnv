@@ -34,6 +34,8 @@ android {
             jupiterVersion '5.0.0'
             platformVersion '1.0.0'
         }
+
+        animationsDisabled true
     }
 
     sourceSets {
