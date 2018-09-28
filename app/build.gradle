@@ -35,6 +35,8 @@ android {
             platformVersion '1.0.0'
         }
 
+        // Available only from CLI gradle command. Target OS shold be API Level 28+ to disable all related preference
+        // It doesn't work via AndroidStudio so far (3.2)
         animationsDisabled true
     }
 
