@@ -19,9 +19,11 @@ class MyScreenshot {
     private val screenshotPath: File = File(Environment.getExternalStorageDirectory(), "app_spoon-screenshots")
 
     fun deleteAllScreenshots() {
-        val deleteRecursively = screenshotPath.deleteRecursively()
-        val result = if (deleteRecursively) "success" else "failure"
-        Log.i(MyScreenshot::class.java.name, "clearing screenshots from folder ${screenshotPath.absolutePath} $result")
+        synchronized(this) {
+            val deleteRecursively = screenshotPath.deleteRecursively()
+            val result = if (deleteRecursively) "success" else "failure"
+            Log.i(MyScreenshot::class.java.name, "clearing screenshots from folder ${screenshotPath.absolutePath} $result")
+        }
     }
 
     fun takeScreenshot(description: Description, text: String) {
