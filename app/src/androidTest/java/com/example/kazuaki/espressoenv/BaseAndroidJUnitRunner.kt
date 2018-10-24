@@ -2,12 +2,16 @@ package com.example.kazuaki.espressoenv
 
 import android.Manifest
 import android.support.test.InstrumentationRegistry
+import android.support.test.espresso.IdlingPolicies
+import android.support.test.espresso.IdlingRegistry
 import android.support.test.runner.AndroidJUnitRunner
 import com.linkedin.android.testbutler.TestButler
 import android.support.test.runner.permission.PermissionRequester
 import android.support.test.uiautomator.By
 import android.support.test.uiautomator.UiDevice
 import android.support.test.uiautomator.Until
+import java.io.File
+import java.util.concurrent.TimeUnit
 
 
 class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
@@ -34,7 +38,7 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
 
         enableScreenshotsPermissions()
 
-        MyScreenshot().deleteAllScreenshots()
+        clearTestData()
 
         // For emulators
         closeAppIfGoogleAppShowsARN()
@@ -54,5 +58,60 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
             it.click()
             uiDevice.wait(Until.gone(By.res("android:id/aerr_mute")), 500)
         }
+    }
+
+    // An example for IdleResource
+    // private fun configureIdleResourceEspresso() {
+    //     val apiClient = ApiClient(InstrumentationRegistry.getTargetContext().applicationContext)
+    //
+    //     IdlingPolicies.setMasterPolicyTimeout(60, TimeUnit.SECONDS)
+    //     IdlingPolicies.setIdlingResourceTimeout(30, TimeUnit.SECONDS)
+    //
+    //     val resource = OkHttp3IdlingResource.create("OkHttp", apiClient.okHttpClient)
+    //     IdlingRegistry.getInstance().register(resource)
+    //     HttpRequestCreator.apiClient = apiClient
+    // }
+
+    private fun clearTestData() {
+        clearLocalData()
+        MyScreenshot().deleteAllScreenshots()
+    }
+
+    private fun clearLocalData() {
+        val cacheDir = InstrumentationRegistry.getTargetContext().cacheDir
+        val appDir = File(cacheDir.parent)
+        // For example. appDir.list has the following directories.
+        // appDir.list:: cache
+        // appDir.list:: code_cache
+        // appDir.list:: lib
+        // appDir.list:: shared_prefs
+        // appDir.list:: no_backup
+        // appDir.list:: databases
+        // appDir.list:: app_dxmaker_cache
+        // appDir.list:: files
+        if (appDir.exists()) {
+            val fileNames = appDir.list()
+            fileNames.forEach {
+                if (it != "lib") {
+                    deleteFile(File(appDir, it))
+                }
+            }
+        }
+    }
+
+    private fun deleteFile(file: File?): Boolean {
+        var deletedAll = true
+
+        if (file == null) return deletedAll
+
+        if (file.isDirectory) {
+            val children = file.list()
+            children.forEachIndexed { index, _ ->
+                deletedAll = deleteFile(File(file, children[index])) && deletedAll
+            }
+        } else {
+            deletedAll = file.delete()
+        }
+        return deletedAll
     }
 }
