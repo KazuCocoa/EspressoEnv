@@ -29,16 +29,13 @@ android {
         // Test not found was raised
         // execution 'ANDROID_TEST_ORCHESTRATOR'
 
-        // We can remove here
-        junitPlatform {
-            // The JUnit Jupiter dependency version to use; matches the platform's version by default
-            jupiterVersion '5.0.0'
-            platformVersion '1.0.0'
-        }
-
         // Available only from CLI gradle command. Target OS shold be API Level 28+ to disable all related preference
         // It doesn't work via AndroidStudio so far (3.2)
         animationsDisabled true
+
+        unitTests {
+            includeAndroidResources true
+        }
     }
 
     sourceSets {
@@ -57,10 +54,17 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.0.0'
 
-    testImplementation junit5.unitTests()
-    testImplementation junit5.parameterized() // for parameterized tests
-    testImplementation 'com.google.truth:truth:0.40'
-    testCompileOnly "de.mannodermaus.gradle.plugins:android-junit5-embedded-runtime:1.0.0"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.2.0'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.2.0'
+
+    testImplementation 'androidx.test:core:1.0.0'
+    testImplementation 'androidx.test:runner:1.1.0'
+    testImplementation 'androidx.test.ext:junit:1.0.0'
+    testImplementation 'androidx.test.ext:truth:1.0.0'
+    testImplementation 'com.google.truth:truth:0.42'
+    testImplementation 'org.robolectric:robolectric:4.0'
 
     androidTestImplementation 'androidx.test:core:1.0.0'
     // AndroidJUnitRunner and JUnit Rules
@@ -90,5 +94,4 @@ dependencies {
     // Test not found was raised
     // androidTestUtil 'androidx.test:orchestrator:1.1.0'
 
-//    androidTestImplementation junit5.instrumentationTests() // Require minsdk 26
 }

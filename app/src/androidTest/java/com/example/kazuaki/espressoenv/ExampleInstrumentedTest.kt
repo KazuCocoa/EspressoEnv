@@ -22,12 +22,19 @@ class ExampleInstrumentedTest {
     val myTestWatcher: MyTestWatcher = MyTestWatcher()
 
     @Test
-    fun useAppContext() {
+    fun useAppContext_context() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
         MyScreenshot().takeScreenshot(classNam, "useAppContext", "neko")
         assertThat(appContext.packageName).isEqualTo("com.example.kazuaki.espressoenv")
         assertWithMessage("message").that(appContext.packageName).isEqualTo("com.example.kazuaki.espressoenv")
+    }
+
+    @Test
+    fun context() {
+        // Context of the app under test.
+        val context = InstrumentationRegistry.getInstrumentation().context
+        assertThat(context.packageName).isEqualTo("com.example.kazuaki.espressoenv.test")
     }
 }
