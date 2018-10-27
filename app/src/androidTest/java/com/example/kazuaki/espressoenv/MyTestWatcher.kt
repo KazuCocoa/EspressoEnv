@@ -1,7 +1,7 @@
 package com.example.kazuaki.espressoenv
 
 import android.preference.PreferenceManager
-import android.support.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
@@ -17,11 +17,11 @@ class MyTestWatcher : TestWatcher() {
     }
 
     private fun clearData() {
-        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getTargetContext())
+        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
         preferenceManager.edit().clear().commit()
 
-        InstrumentationRegistry.getTargetContext().cacheDir.deleteRecursively()
+        InstrumentationRegistry.getInstrumentation().targetContext.cacheDir.deleteRecursively()
         // Need GrantPermission
-        InstrumentationRegistry.getTargetContext().externalCacheDirs.forEach { it.deleteRecursively() }
+        InstrumentationRegistry.getInstrumentation().targetContext.externalCacheDirs.forEach { it.deleteRecursively() }
     }
 }

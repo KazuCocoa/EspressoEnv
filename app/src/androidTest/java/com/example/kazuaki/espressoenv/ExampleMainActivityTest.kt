@@ -1,13 +1,13 @@
 package com.example.kazuaki.espressoenv
 
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.IdlingRegistry
-import android.support.test.espresso.action.ViewActions
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.idling.CountingIdlingResource
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.idling.CountingIdlingResource
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

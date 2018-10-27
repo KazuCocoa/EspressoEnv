@@ -3,8 +3,8 @@ package com.example.kazuaki.espressoenv
 import android.app.Instrumentation
 import android.graphics.Bitmap
 import android.os.Environment
-import android.support.test.InstrumentationRegistry
 import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.runner.Description
 import java.io.BufferedOutputStream
 import java.io.File
