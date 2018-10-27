@@ -1,17 +1,13 @@
 package com.example.kazuaki.espressoenv
 
 import android.Manifest
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.IdlingPolicies
-import android.support.test.espresso.IdlingRegistry
-import android.support.test.runner.AndroidJUnitRunner
-import com.linkedin.android.testbutler.TestButler
-import android.support.test.runner.permission.PermissionRequester
-import android.support.test.uiautomator.By
-import android.support.test.uiautomator.UiDevice
-import android.support.test.uiautomator.Until
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnitRunner
+import androidx.test.runner.permission.PermissionRequester
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.Until
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 
 class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
@@ -34,8 +30,6 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     }
 
     override fun onStart() {
-        TestButler.setup(InstrumentationRegistry.getTargetContext())
-
         enableScreenshotsPermissions()
 
         clearTestData()
@@ -78,7 +72,7 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     }
 
     private fun clearLocalData() {
-        val cacheDir = InstrumentationRegistry.getTargetContext().cacheDir
+        val cacheDir = InstrumentationRegistry.getInstrumentation().targetContext.cacheDir
         val appDir = File(cacheDir.parent)
         // For example. appDir.list has the following directories.
         // appDir.list:: cache

@@ -1,7 +1,7 @@
 package com.example.kazuaki.espressoenv
 
 import android.os.Build
-import android.support.test.filters.SdkSuppress
+import androidx.test.filters.SdkSuppress
 import java.io.File
 
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.GINGERBREAD)
