@@ -12,13 +12,14 @@ import java.io.File
 
 class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
 
-    val WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
-    val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
+    private val writeExternalStorage = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private val readExternalStorage = Manifest.permission.READ_EXTERNAL_STORAGE
 
     // We can use GrantPermissionRule for each test case. But this time, we'd like to allow external storage
     // permission before starting test since we'd like to save screenshot there.
     //
     // We can't grant permission against external storage on android API 28 emulator so far since https://issuetracker.google.com/issues/80393450
+    @Suppress("SpreadOperator")
     private fun grantPermissions(permissions: Array<String>) {
         val requester = PermissionRequester()
         requester.addPermissions(*permissions)
@@ -26,7 +27,7 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     }
 
     private fun enableScreenshotsPermissions() {
-        grantPermissions(arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE))
+        grantPermissions(arrayOf(writeExternalStorage, readExternalStorage))
     }
 
     override fun onStart() {
@@ -44,13 +45,14 @@ class BaseAndroidJUnitRunner : AndroidJUnitRunner() {
     // We can see aerr_mute and aerr_close over 7.0. Not sure under 6.0 though.
     private fun closeAppIfGoogleAppShowsARN() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        val findElementTimeout: Long = 500
         uiDevice.findObject(By.res("android:id/aerr_close"))?.let {
             it.click()
-            uiDevice.wait(Until.gone(By.res("android:id/aerr_close")), 500)
+            uiDevice.wait(Until.gone(By.res("android:id/aerr_close")), findElementTimeout)
         }
         uiDevice.findObject(By.res("android:id/aerr_mute"))?.let {
             it.click()
-            uiDevice.wait(Until.gone(By.res("android:id/aerr_mute")), 500)
+            uiDevice.wait(Until.gone(By.res("android:id/aerr_mute")), findElementTimeout)
         }
     }
 

@@ -31,7 +31,7 @@ task clean(type: Delete) {
 }
 
 detekt {
-    version = "1.0.0.RC6-3"
+    version = "1.0.0.RC9"
     profile("main") {
         input = "$projectDir"
         filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
