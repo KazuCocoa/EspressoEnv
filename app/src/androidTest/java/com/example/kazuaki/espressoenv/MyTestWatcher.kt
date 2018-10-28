@@ -17,7 +17,10 @@ class MyTestWatcher : TestWatcher() {
     }
 
     private fun clearData() {
-        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
+        val preferenceManager =
+            PreferenceManager.getDefaultSharedPreferences(
+                InstrumentationRegistry.getInstrumentation().targetContext
+            )
         preferenceManager.edit().clear().commit()
 
         InstrumentationRegistry.getInstrumentation().targetContext.cacheDir.deleteRecursively()

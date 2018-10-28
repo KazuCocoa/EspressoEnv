@@ -22,7 +22,8 @@ class MyScreenshot {
         synchronized(this) {
             val deleteRecursively = screenshotPath.deleteRecursively()
             val result = if (deleteRecursively) "success" else "failure"
-            Log.i(MyScreenshot::class.java.name, "clearing screenshots from folder ${screenshotPath.absolutePath} $result")
+            Log.i(MyScreenshot::class.java.name,
+                "clearing screenshots from folder ${screenshotPath.absolutePath} $result")
         }
     }
 
@@ -31,7 +32,7 @@ class MyScreenshot {
     }
 
     fun takeScreenshot(className: String, methodName: String, description: String) {
-        if (android.os.Build.VERSION.SDK_INT < 18) { return }
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) { return }
 
         val instrumentation: Instrumentation = InstrumentationRegistry.getInstrumentation()
         val screenshot: Bitmap = instrumentation.uiAutomation.takeScreenshot()
@@ -42,9 +43,10 @@ class MyScreenshot {
         Chmod().plusRWX(screenshotPath)
 
         try {
+            val screenShotQuality = 90
             "$className$underscore$methodName$underscore$description$png".let {
                 BufferedOutputStream(FileOutputStream(File(screenshotPath, it))).let {
-                    screenshot.compress(Bitmap.CompressFormat.PNG, 90, it)
+                    screenshot.compress(Bitmap.CompressFormat.PNG, screenShotQuality, it)
                     it.flush()
                 }
             }
