@@ -1,10 +1,9 @@
 package com.example.kazuaki.espressoenv
 
-import android.app.Instrumentation
 import android.graphics.Bitmap
 import android.os.Environment
 import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.screenshot.Screenshot
 import org.junit.runner.Description
 import java.io.BufferedOutputStream
 import java.io.File
@@ -34,8 +33,8 @@ class MyScreenshot {
     fun takeScreenshot(className: String, methodName: String, description: String) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) { return }
 
-        val instrumentation: Instrumentation = InstrumentationRegistry.getInstrumentation()
-        val screenshot: Bitmap = instrumentation.uiAutomation.takeScreenshot()
+        // The `Screenshot.capture()` wraps `InstrumentationRegistry.getInstrumentation().getUiAutomation().takeScreenshot();` so far.
+        val screenshot: Bitmap = Screenshot.capture().bitmap
 
         val buffer: BufferedOutputStream? = null
 
