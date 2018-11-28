@@ -7,6 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import org.junit.After
 import org.junit.Before
@@ -52,6 +53,9 @@ class ExampleMainActivityTest {
             .tapFabButton()
             .tapFabButton() // Next perform doesn't start during the resource is idle.
             .assertFabButton()
+
+        // Print view hierarchy
+        print(myTestWatcher.getCurrentViewHierarchy(activityRule.activity.window.decorView).toString())
     }
 
     @After

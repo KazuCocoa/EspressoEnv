@@ -1,6 +1,9 @@
 package com.example.kazuaki.espressoenv
 
+import android.app.Activity
 import android.preference.PreferenceManager
+import android.view.View
+import androidx.test.espresso.util.TreeIterables
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
@@ -26,5 +29,9 @@ class MyTestWatcher : TestWatcher() {
         InstrumentationRegistry.getInstrumentation().targetContext.cacheDir.deleteRecursively()
         // Need GrantPermission
         InstrumentationRegistry.getInstrumentation().targetContext.externalCacheDirs.forEach { it.deleteRecursively() }
+    }
+
+    fun getCurrentViewHierarchy(view: View): MutableIterable<View>? {
+        return TreeIterables.breadthFirstViewTraversal(view)
     }
 }
