@@ -1,6 +1,6 @@
 # EspressoEnv
 
-[![Build Status](https://app.bitrise.io/app/5eae31f02b0ed569/status.svg?token=zoPRZQyiC2Pi2RSHvPOjog&branch=master)](https://app.bitrise.io/app/5eae31f02b0ed569)
+[![Build Status](https://dev.azure.com/kazucocoa/EspressoEnv/_apis/build/status/KazuCocoa.EspressoEnv?branchName=master)](https://dev.azure.com/kazucocoa/EspressoEnv/_build/latest?definitionId=5?branchName=master)
 
 Some of template to help Espresso tests.
 
