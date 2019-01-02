@@ -22,10 +22,11 @@ steps:
     echo "Emulator started"
 
 - task: Gradle@2
+  displayName: 'Runs lint, detekt, unit and android tests'
   inputs:
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
-    publishJUnitResults: false
+    publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'connectedAndroidTest'
+    tasks: 'lint detektCheck test connectedAndroidTest'
