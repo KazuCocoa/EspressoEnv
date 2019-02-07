@@ -6,6 +6,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -20,9 +21,9 @@ import org.junit.runner.RunWith
 class ExampleMainActivityTest {
 
     private val myTestWatcher: MyTestWatcher = MyTestWatcher()
-    private val activityRule = ActivityTestRule(MainActivity::class.java, true, true)
+    private val scenarioRule = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
 
-    @get:Rule val ruleChain = RuleChain.outerRule(myTestWatcher).around(activityRule)
+    @get:Rule val ruleChain: RuleChain = RuleChain.outerRule(myTestWatcher).around(scenarioRule)
 
     private val espressoTestIdlingResource = CountingIdlingResource("my_activity")
 
@@ -43,8 +44,10 @@ class ExampleMainActivityTest {
 
     @Before
     fun before() {
-        activityRule.activity.countState = CountStateListenerImpl(espressoTestIdlingResource)
-        IdlingRegistry.getInstance().register(espressoTestIdlingResource)
+        scenarioRule.scenario.onActivity { activity ->
+            activity.countState = CountStateListenerImpl(espressoTestIdlingResource)
+            IdlingRegistry.getInstance().register(espressoTestIdlingResource)
+        }
     }
 
     @Test
@@ -55,7 +58,9 @@ class ExampleMainActivityTest {
             .assertFabButton()
 
         // Print view hierarchy
-        print(myTestWatcher.getCurrentViewHierarchy(activityRule.activity.window.decorView).toString())
+        scenarioRule.scenario.onActivity { activity ->
+            print(myTestWatcher.getCurrentViewHierarchy(activity.window.decorView).toString())
+        }
     }
 
     @After

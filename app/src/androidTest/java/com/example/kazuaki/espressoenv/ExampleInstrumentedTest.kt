@@ -16,7 +16,7 @@ import com.google.common.truth.Truth.assertWithMessage
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    val classNam: String = this.javaClass.name
+    private val classNam: String = this.javaClass.name
 
     @get:Rule
     val myTestWatcher: MyTestWatcher = MyTestWatcher()
