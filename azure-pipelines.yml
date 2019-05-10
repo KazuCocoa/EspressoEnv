@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-10.13'
+  vmImage: 'macOS-10.14'
 
 steps:
 - script: |
@@ -29,4 +29,4 @@ steps:
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'lint detektCheck test connectedAndroidTest'
+    tasks: 'lint detekt test connectedAndroidTest'
