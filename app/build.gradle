@@ -69,7 +69,6 @@ dependencies {
     testImplementation 'androidx.test:runner:1.1.1'
     testImplementation 'androidx.test.ext:junit:1.1.0'
     testImplementation 'androidx.test.ext:truth:1.1.0'
-    testImplementation 'com.google.truth:truth:0.42'
     testImplementation 'org.robolectric:robolectric:4.0'
 
     androidTestImplementation 'androidx.test:core:1.1.0'
@@ -77,10 +76,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.1.1'
 
+
     // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.ext:truth:1.1.0'
-    androidTestImplementation 'com.google.truth:truth:0.44'
+    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
 
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -89,6 +89,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.1'
     androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.1'
+
+    androidTestImplementation "androidx.benchmark:benchmark:1.0.0-alpha01"
 
     // The following Espresso dependency can be either "implementation"
     // or "androidTestImplementation", depending on whether you want the
