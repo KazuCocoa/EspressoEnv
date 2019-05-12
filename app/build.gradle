@@ -90,8 +90,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.1'
     androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.1'
 
-    androidTestImplementation "androidx.benchmark:benchmark:1.0.0-alpha01"
-
     // The following Espresso dependency can be either "implementation"
     // or "androidTestImplementation", depending on whether you want the
     // dependency to appear on your APK's compile classpath or the test APK
