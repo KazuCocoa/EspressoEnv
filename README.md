@@ -4,6 +4,11 @@
 
 Templates to help Espresso tests.
 
+# hint
+
+https://developer.android.com/jetpack/androidx/versions
+https://developer.android.com/jetpack/androidx/releases/test
+
 # Running
 - Collect and manage the results
     - Composer
