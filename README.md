@@ -34,3 +34,7 @@ $ ./gradlew benchmarkReport # benchmark
         tools:replace="android:debuggable" />
     ```
     - https://www.youtube.com/watch?v=ZffMCJdA5Qc&feature=youtu.be&t=1859
+
+# For fragment
+- https://developer.android.com/reference/androidx/fragment/app/testing/FragmentScenario
+    - It helps us to implement "fragment" focused tests
